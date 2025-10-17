@@ -4,6 +4,7 @@
     <input type="email" id="studentEmail"  class="w-full text-sm border rounded px-2 py-1 focus:ring focus:ring-blue-200">
     <input type="password" id="studentPassword"  placeholder="p
 Password">
+<select id="role"><option value="admin">Admin</option><option value="student">Student</option></select>
     <input type="file" id="studentImage"  >
     <textarea name="" id="studentAddress"  class="w-full text-sm border rounded px-2 py-1 focus:ring focus:ring-blue-200" placeholder="Address"></textarea>
     <input id="saveStudentBtn" type="submit" value="Add Student" class="cursor-pointer  text-sm border rounded px-2 py-1 focus:ring focus:ring-blue-200">
@@ -19,6 +20,7 @@ Password">
             const password = document.getElementById('studentPassword').value.trim();
             const image = document.getElementById('studentImage').value.trim();
 const address = document.getElementById('studentAddress').value.trim();
+const role = document.getElementById('role').value.trim();
 
             if (!fname) {
                 alert('Please fill inputs');
@@ -31,16 +33,12 @@ const address = document.getElementById('studentAddress').value.trim();
                 email: email,
                 password: password,
                 image: image,
-                address: address
+                address: address,
+                role: role
             })
             .then(response => {
                 console.log(response)
-                document.getElementById('messageBox').innerText = response.data.message;
-                document.getElementById('studentName').value = '';
-
-                const li = document.createElement('li');
-                li.textContent = `${response.data.student.id} - ${response.data.student.name}`;
-                document.getElementById('studentsUl').appendChild(li);
+                
             })
             .catch(error => {
                 console.error(error);

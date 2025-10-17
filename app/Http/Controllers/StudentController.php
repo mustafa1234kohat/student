@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Student;
+use App\Models\User;
+
 
 use Illuminate\Http\Request;
 
@@ -38,15 +40,19 @@ class StudentController extends Controller
 // ✅ Merge additional fields safely
 $validated['profile_photo_path'] = $request->image ?? null;
 $validated['address'] = $request->address ?? null;
+$validated['role'] = $request->role;
 
 // ✅ Hash password before saving
 $validated['password'] = bcrypt($validated['password']);
-
+$student =null ;
 // ✅ Now create student
-$student =Student::create($validated);
-if ($request->hasFile('image')) {
-    $validated['profile_photo_path'] = $request->file('image')->store('students', 'public');
+if($request->role === 'student'){
+$student = Student::create($validated);
 }
+    $validated['name'] =$request->first_name ?? null;
+    User::create($validated);
+
+
 return response()->json(['data',$student], 200);
     }
 

@@ -9,7 +9,8 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
 
 Route::get('/attendance', function () {
     return view('pages/attendance');
@@ -25,3 +26,23 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+
+Route::middleware(['auth', 'role:super_admin'])->group(function () {
+  
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin-panel', function () {
+        return view('admin.panel');
+    });
+     Route::get('/student-add', function () {
+        return view('pages/studentAdd');
+    });
+});
+
+Route::middleware(['auth', 'role:student'])->group(function () {
+   
+    
+});
